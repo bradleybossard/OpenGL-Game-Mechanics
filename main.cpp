@@ -1,32 +1,4 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <vector>
-
-// vertex.shader:
-/*
-#version 150
-
-in vec2 position;
-
-void main()
-{
-  gl_Position = vec4(position, 0.0, 1.0);
-}
-*/
-
-// fragment.shader
-/*
-#version 150
-
-out vec4 outColor;
-
-void main()
-{
-  outColor = vec4(1.0, 1.0, 1.0, 1.0);
-}
-*/
+#include "includes.h"
 
 GLuint shaderProgram;
 
