@@ -165,8 +165,17 @@ int main( int argc, char* args[] )
   glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(posAttrib);
 
+  GLint uniColor = glGetUniformLocation(shaderProgram, "triangleColor");
+
   while(!glfwWindowShouldClose(window))
   {
+    float time = (float)clock() / (float)CLOCKS_PER_SEC;
+    printf("Time: %f, R: %f\n", time, (sin(time * 4.0f) + 1.0f) / 2.0f);
+    glUniform3f(uniColor, (sin(time * 4.0f) + 1.0f) / 2.0f, 0.0f, 0.0f);
+    printf("GL Error: %s\n", gluErrorString(glGetError()));
+
+    glClear(GL_COLOR_BUFFER_BIT);
+
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     glfwSwapBuffers(window);
