@@ -169,13 +169,19 @@ int main( int argc, char* args[] )
 
   while(!glfwWindowShouldClose(window))
   {
-    float time = (float)clock() / (float)CLOCKS_PER_SEC;
-    printf("Time: %f, R: %f\n", time, (sin(time * 4.0f) + 1.0f) / 2.0f);
-    glUniform3f(uniColor, (sin(time * 4.0f) + 1.0f) / 2.0f, 0.0f, 0.0f);
-    printf("GL Error: %s\n", gluErrorString(glGetError()));
+    float time = glfwGetTime();
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    const GLfloat color[] = { (float)sin(time) * 0.5f + 0.5f,
+                              (float)cos(time) * 0.5f + 0.5f,
+                              0.0f, 1.0f };
 
+    glClearBufferfv(GL_COLOR, 0, color);
+
+    GLfloat attrib[] = { (float)sin(time) * 0.5f,
+                         (float)cos(time) * 0.6f,
+                         0.0f, 0.0f };
+
+    glVertexAttrib4fv(0, attrib);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
     glfwSwapBuffers(window);

@@ -1,8 +1,12 @@
 #version 410
 
-in vec2 position;
+layout (location = 0) in vec4 offset;
 
 void main()
 {
-  gl_Position = vec4(position, 0.0, 1.0);
+  const vec4 vertices[3] = vec4[3](vec4( 0.25, -0.25, 0.5, 1.0),
+                                   vec4(-0.25, -0.25, 0.5, 1.0),
+                                   vec4( 0.25, 0.25, 0.5, 1.0));
+
+  gl_Position = vertices[gl_VertexID] + offset;
 }
