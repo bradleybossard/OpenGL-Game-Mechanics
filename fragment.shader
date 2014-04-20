@@ -1,10 +1,13 @@
 #version 410
 
-uniform vec3 triangleColor;
+in TES_OUT
+{
+  vec4 color;
+} fs_in;
 
-out vec4 outColor;
+out vec4 color;
 
 void main()
 {
-  outColor = vec4(triangleColor, 1.0);
+  color = fs_in.color;
 }

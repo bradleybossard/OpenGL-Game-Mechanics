@@ -90,6 +90,8 @@ GLuint createShader(GLenum shaderType, char* shaderFile)
     case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
     case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
     case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
+    case GL_TESS_CONTROL_SHADER: strShaderType = "tesselation control"; break;
+    case GL_TESS_EVALUATION_SHADER: strShaderType = "tesselation evaluation"; break;
     }
     fprintf(stderr, "Compile failure in %s shader:\n%s\n", strShaderType, strInfoLog);
     delete[] strInfoLog;
@@ -104,6 +106,8 @@ void initProgram()
 
   shaderList.push_back(createShader(GL_VERTEX_SHADER, "vertex.shader"));
   shaderList.push_back(createShader(GL_FRAGMENT_SHADER, "fragment.shader"));
+  shaderList.push_back(createShader(GL_TESS_CONTROL_SHADER, "tesselation_control.shader"));
+  shaderList.push_back(createShader(GL_TESS_EVALUATION_SHADER, "tesselation_evaluation.shader"));
 
   shaderProgram = createProgram(shaderList);
 
@@ -165,24 +169,29 @@ int main( int argc, char* args[] )
   glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
   glEnableVertexAttribArray(posAttrib);
 
-  GLint uniColor = glGetUniformLocation(shaderProgram, "triangleColor");
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   while(!glfwWindowShouldClose(window))
   {
     float time = glfwGetTime();
 
-    const GLfloat color[] = { (float)sin(time) * 0.5f + 0.5f,
-                              (float)cos(time) * 0.5f + 0.5f,
-                              0.0f, 1.0f };
+    const GLfloat backgroundColor[] = { (float)sin(time) * 0.5f + 0.5f,
+                                        (float)cos(time) * 0.5f + 0.5f,
+                                        0.0f, 1.0f };
 
-    glClearBufferfv(GL_COLOR, 0, color);
+    glClearBufferfv(GL_COLOR, 0, backgroundColor);
 
-    GLfloat attrib[] = { (float)sin(time) * 0.5f,
-                         (float)cos(time) * 0.6f,
-                         0.0f, 0.0f };
+    GLfloat trianglePosition[] = { (float)sin(time) * 0.5f,
+                                   (float)cos(time) * 0.6f,
+                                   0.0f, 0.0f };
 
-    glVertexAttrib4fv(0, attrib);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    GLfloat triangleColor[] = { (float)cos(time) * 0.7f + 0.5f,
+                                (float)sin(time) * 0.7f + 0.5f,
+                                0.0f, 1.0f };
+
+    glVertexAttrib4fv(0, trianglePosition);
+    glVertexAttrib4fv(1, triangleColor);
+    glDrawArrays(GL_PATCHES, 0, 3);
 
     glfwSwapBuffers(window);
     glfwPollEvents();
