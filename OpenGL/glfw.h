@@ -1,3 +1,6 @@
+#ifndef GLFW_CLASS
+#define GLFW_CLASS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <GLFW/glfw3.h>
@@ -19,3 +22,5 @@ namespace OpenGL {
       GLFWwindow* createWindow(char* title, int x, int y);
   };
 }
+
+#endif

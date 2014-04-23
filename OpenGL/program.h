@@ -1,3 +1,6 @@
+#ifndef PROGRAM_CLASS
+#define PROGRAM_CLASS
+
 #include <vector>
 #include <GL/glew.h>
 #include "shader.h"
@@ -19,3 +22,5 @@ namespace OpenGL {
 
   };
 }
+
+#endif

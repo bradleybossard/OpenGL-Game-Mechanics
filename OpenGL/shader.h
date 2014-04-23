@@ -1,3 +1,6 @@
+#ifndef SHADER_CLASS
+#define SHADER_CLASS
+
 #include <GL/glew.h>
 #include "../Util.h"
 
@@ -14,3 +17,5 @@ namespace OpenGL {
       void logError(char* location);
   };
 }
+
+#endif

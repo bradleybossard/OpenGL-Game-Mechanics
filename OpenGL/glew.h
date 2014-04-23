@@ -1,3 +1,6 @@
+#ifndef GLEW_CLASS
+#define GLEW_CLASS
+
 #include <stdio.h>
 #include <GL/glew.h>
 
@@ -8,3 +11,5 @@ namespace OpenGL {
       GLEW();
   };
 }
+
+#endif
