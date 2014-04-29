@@ -1,17 +1,17 @@
 #include "program.h"
 
-namespace OpenGL {
+namespace GL {
   // Public
 
   // Creates a program, creates and attaches shaders to it, links it, logging errors, detaching the shaders after linking the program.
   Program::Program() {
-    programId = glCreateProgram();
+    _handle = glCreateProgram();
 
-    fprintf(stdout, "Constructing Program with ID: %i\n", programId);
+    fprintf(stdout, "Constructing Program with ID: %i\n", _handle);
 
     std::vector<Shader> shaders = createShaders();
     attachShaders(shaders);
-    glLinkProgram(programId);
+    glLinkProgram(_handle);
 
     if (status() == GL_FALSE) {
       logError();
@@ -21,24 +21,24 @@ namespace OpenGL {
   }
 
   Program::~Program() {
-    printf("Destructing Program with ID: %i\n", programId);
-    glDeleteProgram(programId);
+    printf("Destructing Program with ID: %i\n", _handle);
+    glDeleteProgram(_handle);
   }
 
-  GLuint Program::id() {
-    return programId;
+  GLuint Program::getHandle() {
+    return _handle;
   }
 
   GLint Program::status() {
     GLint status;
-    glGetProgramiv(programId, GL_LINK_STATUS, &status);
+    glGetProgramiv(_handle, GL_LINK_STATUS, &status);
 
     return status;
   }
 
   // Use this program as the current program.
   void Program::use() {
-    glUseProgram(programId);
+    glUseProgram(_handle);
   }
   // END Public
 
@@ -59,7 +59,7 @@ namespace OpenGL {
 
   void Program::attachShaders(std::vector<Shader> &shaders) {
     for (size_t iLoop = 0; iLoop < shaders.size(); iLoop++) {
-      shaders[iLoop].attachTo(programId);
+      shaders[iLoop].attachTo(_handle);
     }
   }
 
@@ -67,16 +67,16 @@ namespace OpenGL {
   // https://www.khronos.org/opengles/sdk/docs/man/xhtml/glGetAttachedShaders.xml
   void Program::detachShaders(std::vector<Shader> &shaders) {
     for (size_t iLoop = 0; iLoop < shaders.size(); iLoop++) {
-      shaders[iLoop].detachFrom(programId);
+      shaders[iLoop].detachFrom(_handle);
     }
   }
 
   void Program::logError() {
     GLint infoLogLength;
-    glGetProgramiv(programId, GL_INFO_LOG_LENGTH, &infoLogLength);
+    glGetProgramiv(_handle, GL_INFO_LOG_LENGTH, &infoLogLength);
 
     GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-    glGetProgramInfoLog(programId, infoLogLength, NULL, strInfoLog);
+    glGetProgramInfoLog(_handle, infoLogLength, NULL, strInfoLog);
     fprintf(stderr, "Program linker failure: %s\n", strInfoLog);
     delete[] strInfoLog;
   }

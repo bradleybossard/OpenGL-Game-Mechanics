@@ -1,20 +1,21 @@
-#ifndef GLFW_CLASS
-#define GLFW_CLASS
+#ifndef GLFW_H
+#define GLFW_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <GLFW/glfw3.h>
 #include "callback.h"
 
-namespace OpenGL {
+namespace GL {
   class GLFW {
     public:
       GLFW(char* title, int x, int y);
       // Terminates GLFW and deletes the active window.
       ~GLFW();
-
-      GLFWwindow* window;
+      GLFWwindow* getWindow();
     private:
+      GLFWwindow* _window;
+
       // Initializes GLFW and sets up it's properties.
       void initGlfw();
 

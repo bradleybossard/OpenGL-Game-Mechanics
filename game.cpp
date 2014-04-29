@@ -1,7 +1,7 @@
 #include "game.h"
 
 namespace Game {
-  void setup(OpenGL::Program shaderProgram) {
+  void setup(GL::Program shaderProgram) {
     glClearColor( 0.f, 0.f, 0.f, 1.f );
 
     static const float data[] = {
@@ -19,7 +19,7 @@ namespace Game {
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    GLint posAttrib = glGetAttribLocation(shaderProgram.id(), "position");
+    GLint posAttrib = glGetAttribLocation(shaderProgram.getHandle(), "position");
     glVertexAttribPointer(posAttrib, 4, GL_FLOAT, GL_FALSE, 0, NULL);
     glEnableVertexAttribArray(posAttrib);
 

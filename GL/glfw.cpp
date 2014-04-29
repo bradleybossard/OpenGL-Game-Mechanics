@@ -1,16 +1,20 @@
 #include "glfw.h"
 
-namespace OpenGL {
+namespace GL {
   // Public
   GLFW::GLFW(char* title, int x, int y) {
     initGlfw();
-    window = createWindow(title, x, y);
+    _window = createWindow(title, x, y);
   }
 
   GLFW::~GLFW() {
     printf("Destructing GLFW window\n");
-    glfwDestroyWindow(window);
+    glfwDestroyWindow(_window);
     glfwTerminate();
+  }
+
+  GLFWwindow* GLFW::getWindow() {
+    return _window;
   }
   // END Public
 

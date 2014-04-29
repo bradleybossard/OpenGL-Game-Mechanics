@@ -1,24 +1,24 @@
-#include "OpenGL/program.h"
-#include "OpenGL/glfw.h"
-#include "OpenGL/glew.h"
+#include "GL/program.h"
+#include "GL/glfw.h"
+#include "GL/glew.h"
 #include "game.h"
 
 int main(int argc, char* args[])
 {
-  OpenGL::GLFW glfw("Tessellated Triangle", 1680, 1050);
-  OpenGL::GLEW glew;
+  GL::GLFW glfw("Tessellated Triangle", 1680, 1050);
+  GL::GLEW glew;
 
   // Sets up the variable theProgram with the compiled GLSL program.
-  OpenGL::Program shaderProgram;
+  GL::Program shaderProgram;
   shaderProgram.use();
 
   Game::setup(shaderProgram);
 
-  while(!glfwWindowShouldClose(glfw.window))
+  while(!glfwWindowShouldClose(glfw.getWindow()))
   {
     Game::render(glfwGetTime());
 
-    glfwSwapBuffers(glfw.window);
+    glfwSwapBuffers(glfw.getWindow());
     glfwPollEvents();
   }
 

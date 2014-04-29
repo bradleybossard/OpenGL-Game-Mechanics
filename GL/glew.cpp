@@ -1,6 +1,6 @@
 #include "glew.h"
 
-namespace OpenGL {
+namespace GL {
   // Public
   GLEW::GLEW() {
     glewExperimental = GL_TRUE;
