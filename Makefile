@@ -1,5 +1,5 @@
 # OBJS specifies which files to compile as part of the project
-OBJS = main.cpp util.cpp GL/program.cpp GL/shader.cpp GL/glfw.cpp GL/glew.cpp GL/callback.cpp game.cpp
+OBJS = main.cpp util.cpp GL/program.cpp GL/shader.cpp GL/glfw.cpp GL/glew.cpp GL/callback.cpp GL/point.cpp GL/color.cpp GL/vertex.cpp GL/polygon.cpp game.cpp
 
 # CC specifies which compiler we're using
 CC = g++

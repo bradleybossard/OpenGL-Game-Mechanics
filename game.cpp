@@ -1,4 +1,5 @@
 #include "game.h"
+#include "GL/polygon.h"
 
 namespace Game {
   void setup(GL::Program shaderProgram) {
@@ -10,10 +11,26 @@ namespace Game {
       0.25, 0.25, 0.5, 1.0
     };
 
+    GL::Point p1 = GL::Point(0.25, -0.25);
+    GL::Point p2 = GL::Point(-0.25, -0.25);
+    GL::Point p3 = GL::Point(0.25, 0.25);
+    GL::Vertex v1 = GL::Vertex(p1);
+    GL::Vertex v2 = GL::Vertex(p2);
+    GL::Vertex v3 = GL::Vertex(p3);
+    GL::Polygon poly = GL::Polygon();
+    poly.addVertex(v1);
+    poly.addVertex(v2);
+    poly.addVertex(v3);
+
+    for (size_t i = 0; i < poly.getCoordinates().size(); i++) {
+      printf("%f, ", poly.getCoordinates()[i]);
+    }
+
     GLuint vbo;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+    // glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, poly.coordinatesSize(), &poly.getCoordinates().front(), GL_STATIC_DRAW);
 
     GLuint vao;
     glGenVertexArrays(1, &vao);
@@ -33,7 +50,7 @@ namespace Game {
 
     glClearBufferfv(GL_COLOR, 0, backgroundColor);
 
-    GLfloat trianglePosition[] = { (float)sin(time) * 0.5f,
+    GLfloat offset[] = { (float)sin(time) * 0.5f,
                                    (float)cos(time) * 0.6f,
                                    0.0f, 0.0f };
 
@@ -42,7 +59,7 @@ namespace Game {
                                 0.0f, 1.0f };
 
     glVertexAttrib4fv(1, triangleColor);
-    glVertexAttrib4fv(2, trianglePosition);
+    glVertexAttrib4fv(2, offset);
 
     glDrawArrays(GL_PATCHES, 0, 3);
   }
