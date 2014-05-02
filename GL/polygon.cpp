@@ -31,16 +31,11 @@ namespace GL {
 
   std::vector<GLfloat> Polygon::getCoordinates() {
     std::vector<GLfloat> coordinates;
-    int size = 0;
 
     for (size_t i = 0; i < _vertices.size(); i++) {
-      size += _vertices[i].getCoordinates().size();
-    }
-
-    coordinates.reserve(size);
-
-    for (size_t i = 0; i < _vertices.size(); i++) {
-      coordinates.insert(coordinates.end(), _vertices[i].getCoordinates().begin(), _vertices[i].getCoordinates().end());
+      for (size_t j = 0; j < _vertices[i].getCoordinates().size(); j++) {
+        coordinates.push_back(_vertices[i].getCoordinates()[j]);
+      }
     }
 
     return coordinates;
@@ -48,16 +43,11 @@ namespace GL {
 
   std::vector<int> Polygon::getRGBA() {
     std::vector<int> rgba;
-    int size = 0;
 
     for (size_t i = 0; i < _vertices.size(); i++) {
-      size += _vertices[i].getRGBA().size();
-    }
-
-    rgba.reserve(size);
-
-    for (size_t i = 0; i < _vertices.size(); i++) {
-      rgba.insert(rgba.end(), _vertices[i].getRGBA().begin(), _vertices[i].getRGBA().end());
+      for (size_t j = 0; j < _vertices[i].getRGBA().size(); j++) {
+        rgba.push_back(_vertices[i].getRGBA()[j]);
+      }
     }
 
     return rgba;
